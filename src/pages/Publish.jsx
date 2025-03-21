@@ -10,11 +10,16 @@ function Publish() {
   const [newLink, setNewLink] = useState("");
   const mediaRecorderRef = useRef(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [mimeType, setMimeType] = useState("audio/webm");
 
-  // ✅ Start Recording (.webm format)
+  // ✅ Start Recording - smart format detection
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorderRef.current = new MediaRecorder(stream); // default = webm
+
+    const preferredType = MediaRecorder.isTypeSupported("audio/mp3") ? "audio/mp3" : "audio/webm";
+    setMimeType(preferredType);
+
+    mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: preferredType });
     const chunks = [];
 
     mediaRecorderRef.current.ondataavailable = (event) => {
@@ -22,7 +27,7 @@ function Publish() {
     };
 
     mediaRecorderRef.current.onstop = () => {
-      const audioBlob = new Blob(chunks, { type: "audio/webm" });
+      const audioBlob = new Blob(chunks, { type: preferredType });
       setAudioBlob(audioBlob);
     };
 
@@ -60,7 +65,8 @@ function Publish() {
     formData.append("links", links.join(","));
 
     if (audioBlob) {
-      formData.append("audio", new File([audioBlob], "recording.webm", { type: "audio/webm" }));
+      const extension = mimeType.split("/")[1];
+      formData.append("audio", new File([audioBlob], `recording.${extension}`, { type: mimeType }));
     }
 
     sources.forEach((file) => {
@@ -81,7 +87,8 @@ function Publish() {
     <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Publish Your Post</h2>
       <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* Heading */}
+
+        {/* Heading Input */}
         <div>
           <label className="block text-lg font-semibold mb-2">Post Heading</label>
           <input
@@ -141,7 +148,7 @@ function Publish() {
           )}
         </div>
 
-        {/* Links Input */}
+        {/* Links */}
         <div>
           <label className="block text-lg font-semibold mb-2">Add Links</label>
           <div className="flex space-x-3">
