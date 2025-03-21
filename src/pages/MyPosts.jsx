@@ -9,25 +9,23 @@ function MyPosts() {
   useEffect(() => {
     const fetchMyPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/posts");
+        const response = await axios.get("https://political-platform-server.onrender.com/api/posts");
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
 
-    // Load profile data from localStorage
     setFullName(localStorage.getItem("fullName") || "Anonymous");
     setOccupation(localStorage.getItem("occupation") || "Unknown");
 
     fetchMyPosts();
   }, []);
 
-  // Delete Post Function
   const deletePost = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/posts/${id}`);
-      setPosts(posts.filter(post => post.id !== id)); // Remove from UI
+      await axios.delete(`https://political-platform-server.onrender.com/api/posts/${id}`);
+      setPosts(posts.filter(post => post.id !== id));
       alert("Post deleted successfully!");
     } catch (error) {
       console.error("Error deleting post:", error);
@@ -45,17 +43,22 @@ function MyPosts() {
           {posts.map((post) => (
             <div key={post.id} className="border p-4 rounded-lg shadow-md bg-white">
               
-              {/* Display Profile Name and Occupation */}
-              <h3 className="text-lg font-bold">{fullName} - <span className="text-gray-600">{occupation}</span></h3>
+              {/* Name + Occupation */}
+              <h3 className="text-lg font-bold">
+                {fullName} - <span className="text-gray-600">{occupation}</span>
+              </h3>
 
-              {/* Post Heading */}
+              {/* Heading */}
               <h3 className="text-xl font-semibold">{post.heading}</h3>
-              
-              {/* Audio Player */}
+
+              {/* Audio */}
               {post.audio && (
                 <div className="mt-2">
                   <audio controls className="w-full">
-                    <source src={`http://localhost:5000${post.audio}`} type="audio/wav" />
+                    <source
+                      src={`https://political-platform-server.onrender.com${post.audio}`}
+                      type="audio/wav"
+                    />
                     Your browser does not support the audio element.
                   </audio>
                 </div>
@@ -68,7 +71,12 @@ function MyPosts() {
                   <ul className="list-disc pl-5 space-y-1">
                     {post.sources.split(",").map((src, index) => (
                       <li key={index}>
-                        <a href={`http://localhost:5000${src}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                        <a
+                          href={`https://political-platform-server.onrender.com${src}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
                           {src.split("/").pop()}
                         </a>
                       </li>
@@ -84,7 +92,12 @@ function MyPosts() {
                   <ul className="list-disc pl-5 space-y-1">
                     {post.links.split(",").map((link, index) => (
                       <li key={index}>
-                        <a href={link.trim()} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline break-all">
+                        <a
+                          href={link.trim()}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline break-all"
+                        >
                           {link}
                         </a>
                       </li>
@@ -94,8 +107,8 @@ function MyPosts() {
               )}
 
               {/* Delete Button */}
-              <button 
-                onClick={() => deletePost(post.id)} 
+              <button
+                onClick={() => deletePost(post.id)}
                 className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition w-full"
               >
                 Delete Post

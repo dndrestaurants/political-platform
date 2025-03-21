@@ -69,7 +69,7 @@ function Publish() {
     });
 
     try {
-      const response = await axios.post("http://localhost:5000/api/posts", formData, {
+      const response = await axios.post("https://political-platform-server.onrender.com/api/posts", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert(response.data.message);
