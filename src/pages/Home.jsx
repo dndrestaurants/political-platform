@@ -55,13 +55,13 @@ function Home() {
               {/* Audio */}
               {post.audio && (
                 <div className="mt-3">
+                  
                   <audio controls className="w-full">
-                    <source
-                      src={`https://political-platform-server.onrender.com${post.audio}`}
-                      type="audio/wav"
-                    />
-                    Your browser does not support the audio element.
-                  </audio>
+  <source src={`https://political-platform-server.onrender.com${post.audio}`} type="audio/webm" />
+  <source src={`https://political-platform-server.onrender.com${post.audio}`} type="audio/mp3" />
+  Your browser does not support the audio element.
+</audio>
+
                 </div>
               )}
 
