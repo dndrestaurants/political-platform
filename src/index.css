@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure content starts below fixed navbar */
+body {
+  margin: 0;
+  padding-top: 72px; /* Push content below navbar */
+  background-color: #f5f5f5;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Fix Navbar */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background-color: #b91c1c; /* Red navbar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Navbar Buttons */
+.nav-buttons {
+  display: flex;
+  gap: 50px; /* Adds spacing between Home, Publish, and My Posts */
+}
+
+/* Button Styling */
+.nav-button {
+  background-color: black;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out;
+  text-transform: uppercase;
+}
+
+.nav-button:hover {
+  background-color: #333;
+}
+
+
+/* Card Styling */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: #a71d2a;
+}
+
+/* Ensure post content has good spacing */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
